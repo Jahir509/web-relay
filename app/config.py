@@ -10,7 +10,10 @@ POLL_INTERVAL = float(os.getenv("POLL_INTERVAL", "1"))
 FAST_RETRY = os.getenv("FAST_RETRY") == "1"
 
 # Secret the test receiver in routers/sink.py verifies with.
-SINK_SECRET = os.getenv("SINK_SECRET", "whsec_tyHud0SZfHTqj6LMdH5kku-43NPBuzKnKJxhuyrHKu8")
+SINK_SECRET = os.getenv("SINK_SECRET", "").strip()
+
+if not SINK_SECRET:
+    raise RuntimeError("SINK_SECRET is not set")
 
 # How long a signed request stays valid, in seconds.
 SIGNATURE_TOLERANCE = 300

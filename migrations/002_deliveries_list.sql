@@ -11,3 +11,6 @@ create table delivery_attempts (
 
 create index delivery_attempts_delivery_idx
     on delivery_attempts (delivery_id, attempt_number);
+
+
+alter table endpoints add column event_types text[] not null default '{}';

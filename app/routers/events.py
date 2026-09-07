@@ -18,7 +18,7 @@ async def publish_event(event: EventIn, conn: Annotated[Any, Depends(get_conn)])
         row = await message_repo.create(conn, event.event_type, event.payload)
         # endpoint_id = await endpoint_repo.get_first_id(conn)
         # await delivery_repo.create(conn, row["id"], endpoint_id)
-        deliveries = await delivery_repo.fan_out(conn, row["id"])
+        deliveries = await delivery_repo.fan_out(conn, row["id"],row["event_type"])
 
     return EventOut(id=row["id"], event_type=row["event_type"],deliveries_created=len(deliveries),
 )

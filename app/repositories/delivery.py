@@ -6,12 +6,15 @@ async def create(conn, message_id, endpoint_id):
     )
 
 
-async def fan_out(conn, message_id):
+
+async def fan_out(conn, message_id, event_type):
     return await conn.fetch(
         """insert into deliveries (message_id, endpoint_id)
            select $1, id from endpoints
+           where event_types = '{}' or $2 = any(event_types)
            returning id""",
         message_id,
+        event_type,
     )
 
 

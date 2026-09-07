@@ -1,10 +1,11 @@
-async def create(conn, url, secret):
+async def create(conn, url, secret, event_types):
     return await conn.fetchrow(
-        """insert into endpoints (url, secret)
-           values ($1, $2)
-           returning id, url, secret""",
+        """insert into endpoints (url, secret, event_types)
+           values ($1, $2, $3)
+           returning id, url, secret, event_types""",
         url,
         secret,
+        event_types,
     )
 
 
